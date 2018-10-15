@@ -1,7 +1,7 @@
 ---
-title: "lab4"
-author: "Collin Loy, Michelle Cryder"
-date: "October 11, 2018"
+title: "Lab4_Copy"
+author: "Michelle Cryder, Collin Loy"
+date: "October 12, 2018"
 output: html_document
 ---
 
@@ -9,29 +9,34 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Reading the data
+## Reading the Data
 
 ```{r}
 
 av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
-av
 
+head(av)
 ```
 
 ## Part One: Data Tidying
 
 The avenger data consists of ten columns for each avenger called Death[1-5] to Return[1-5]
 
-Get the data into a format where the five columns for Death[1-5] are replaced by two columnes: Time, and Death. Time should be a number between 1 and 5 (look into the function parse_number); Death is a categorical variables with values “yes”, “no” and “”. Call the result deaths.
+Get the data into a format where the five columns for Death[1-5] are replaced by two columnes: Time, and Death. Time should be a number between 1 and 5 (look into the function parse_number); Death is a categorical variables with values "yes", "no" and "". Call the result deaths.
 
 Similarly, deal with the returns of characters.
 
 ```{r}
+library(tidyverse)
+av1 = av %>% gather(key = Time, value = Death, c(11, 13, 15, 17, 19))
+av1 = av1 %>% mutate(Time = parse_number(Time))
 
+
+av2 = av %>% gather(key = Time2, value = Return, c(12, 14, 16, 18, 20))
+av2 = av2 %>% mutate(Time2 = parse_number(Time2))
 
 
 ```
-
 
 ## Part Two: Validation
 
@@ -39,21 +44,33 @@ Each team member picks one of the statements in the FiveThirtyEight analysis and
 
 Upload your answers and the code to the repository. Discuss and refine answers as a team.
 
+  + Michelle: "Out of 173 listed Avengers, my analysis found that 69 had died at least one time after they joined the team."
+      + This is true. I filtered out characters that had a YES under Death1, then grouped by Name, giving 69 results. 
+  + Collin: "But you can only tempt death so many times. There’s a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife"
+    + This is true. My code filters for death 1 to be equal to yes and repeats the same for return1. 69 deaths for the deathone data and 46 that were able to return. 46/69 shrinks down to 2/3rds for the survival rate after a single death of a member of the Avengers.
 ```{r}
 
+#mlc ryder
+str(av1)
 
+onedeath = av %>% filter(Death1 == "YES") 
+
+onedeath = onedeath %>% group_by(Name.Alias)
+
+onedeath
+str(onedeath)
+
+#loycolin\
+
+deathone = av %>% filter(Death1 == "YES")
+returnone = av %>% filter(Return1 == "YES")
+dim(deathone) #69 deaths for death 1
+dim(returnone) # 46 returns for return 1
+
+survivalrate=46/69
+survivalrate
 
 ```
 
-## Submission
 
-Submission
-In Canvas, submit an RMarkdown file (and the knitted html document) with:
 
-the names of all team members that worked on the document.
-a link to the github repo you were working in.
-code and answers to all of the questions.
-you can upload the data file, but you don’t have to
-Due date: You have time until Monday at 10 pm to submit the final RMmarkdown file.
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
