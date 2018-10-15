@@ -314,8 +314,9 @@ $(document).ready(function () {
 </div>
 
 
-<div id="reading-the-data" class="section level2">
-<h2>Reading the Data</h2>
+<div id="reading-the-data-and-github-link" class="section level2">
+<h2>Reading the Data and github link</h2>
+<p><a href="https://github.com/loycollin/lab4.git" class="uri">https://github.com/loycollin/lab4.git</a></p>
 <pre class="r"><code>av &lt;- read.csv(&quot;https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv&quot;, stringsAsFactors = FALSE)
 
 head(av)</code></pre>
@@ -368,12 +369,12 @@ head(av)</code></pre>
 <p>Get the data into a format where the five columns for Death[1-5] are replaced by two columnes: Time, and Death. Time should be a number between 1 and 5 (look into the function parse_number); Death is a categorical variables with values “yes”, “no” and &quot;&quot;. Call the result deaths.</p>
 <p>Similarly, deal with the returns of characters.</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages ---------------------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## -- Attaching packages ----------------------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
 <pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
 ## v tibble  1.4.2     v dplyr   0.7.6
 ## v tidyr   0.8.1     v stringr 1.3.1
 ## v readr   1.1.1     v forcats 0.3.0</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+<pre><code>## -- Conflicts -------------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>av1 = av %&gt;% gather(key = Time, value = Death, c(11, 13, 15, 17, 19))
@@ -394,7 +395,7 @@ av2 = av2 %&gt;% mutate(Time2 = parse_number(Time2))</code></pre>
 </ul></li>
 <li>Collin: “But you can only tempt death so many times. There’s a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife”
 <ul>
-<li>This is true my math counts 69 deaths for the deathone data and 46 that were able to return. 46/69 shrinks down to 2/3rds for the survival rate after a single death of a member of the Avengers.</li>
+<li>This is true. My code filters for death 1 to be equal to yes and repeats the same for return1. 69 deaths for the deathone data and 46 that were able to return. 46/69 shrinks down to 2/3rds for the survival rate after a single death of a member of the Avengers.</li>
 </ul></li>
 </ul>
 <pre class="r"><code>#mlc ryder

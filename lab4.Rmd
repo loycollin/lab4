@@ -9,7 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Reading the Data
+## Reading the Data and github link
+
+https://github.com/loycollin/lab4.git
 
 ```{r}
 
