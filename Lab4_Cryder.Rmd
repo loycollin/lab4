@@ -1,0 +1,64 @@
+---
+title: "Lab4_Copy"
+author: "Michelle Cryder"
+date: "October 12, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Reading the Data
+
+```{r}
+
+av <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/avengers/avengers.csv", stringsAsFactors = FALSE)
+
+av
+```
+
+## Part One: Data Tidying
+
+The avenger data consists of ten columns for each avenger called Death[1-5] to Return[1-5]
+
+Get the data into a format where the five columns for Death[1-5] are replaced by two columnes: Time, and Death. Time should be a number between 1 and 5 (look into the function parse_number); Death is a categorical variables with values "yes", "no" and "". Call the result deaths.
+
+Similarly, deal with the returns of characters.
+
+```{r}
+library(tidyverse)
+av1 = av %>% gather(key = Time, value = Death, c(11, 13, 15, 17, 19))
+av1 = av1 %>% mutate(Time = parse_number(Time))
+
+
+av2 = av %>% gather(key = Time2, value = Return, c(12, 14, 16, 18, 20))
+av2 = av2 %>% mutate(Time2 = parse_number(Time2))
+
+
+```
+
+## Part Two: Validation
+
+Each team member picks one of the statements in the FiveThirtyEight analysis and fact checks it based on the data. Use dplyr functionality whenever possible.
+
+Upload your answers and the code to the repository. Discuss and refine answers as a team.
+
+  + Michelle: "Out of 173 listed Avengers, my analysis found that 69 had died at least one time after they joined the team."
+      + This is true. I filtered out characters that had a YES under Death1, then grouped by Name, giving 69 results. 
+  
+```{r}
+
+str(av1)
+
+onedeath = av %>% filter(Death1 == "YES") 
+
+onedeath = onedeath %>% group_by(Name.Alias)
+
+onedeath
+str(onedeath)
+
+```
+
+
+
